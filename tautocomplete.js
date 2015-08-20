@@ -63,6 +63,25 @@
                     return true;
                 else
                     return false;
+            },
+            all: function() {
+                var selected = el.ddTable.find("tbody").find(".selected");                
+                var selTd = selected.find('td.this_td');
+                
+                var dataList = selTd.map(function() {
+                    return $(this).data("cval");
+                }).get();
+                
+                var obj = {}; //
+                
+                for (var d=0; d<dataList.length; d++){
+                  var _d = dataList[d].split("@@");
+                  var k = _d[0];
+                  var v = _d[1];
+                  obj[k] = v;
+                }
+                                
+                return obj;
             }
         };
 
@@ -379,7 +398,7 @@
                             // return on column count
                             if (j <= cols) {
                                 cell = obj[key];
-                                row = row + "<td>" + cell + "</td>";
+                                row = row + "<td class='this_td' data-cval='"+key+"@@"+cell+"'>" + cell + "</td>";
                             }
                             else {
                                 continue;
